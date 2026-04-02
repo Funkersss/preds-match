@@ -1,0 +1,78 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum MatchStatus {
+  PENDING
+  LIVE
+  FINISHED
+  MANUAL_REVIEW
+}
+
+enum Outcome {
+  TEAM1_WIN
+  DRAW
+  TEAM2_WIN
+}
+
+model User {
+  id          String       @id @default(cuid())
+  email       String       @unique
+  name        String
+  createdAt   DateTime     @default(now()) @map("created_at")
+  predictions Prediction[]
+  promoCodes  PromoCode[]
+
+  @@map("users")
+}
+
+model Match {
+  id          String       @id @default(cuid())
+  team1       String
+  team2       String
+  team1Code   String       @map("team1_code")
+  team2Code   String       @map("team2_code")
+  matchDate   DateTime     @map("match_date")
+  apiMatchId  Int?         @map("api_match_id")
+  status      MatchStatus  @default(PENDING)
+  result      Outcome?
+  team1Score  Int?         @map("team1_score")
+  team2Score  Int?         @map("team2_score")
+  updatedAt   DateTime     @updatedAt @map("updated_at")
+  predictions Prediction[]
+  promoCodes  PromoCode[]
+
+  @@map("matches")
+}
+
+model Prediction {
+  id         String   @id @default(cuid())
+  userId     String   @map("user_id")
+  matchId    String   @map("match_id")
+  prediction Outcome
+  isCorrect  Boolean? @map("is_correct")
+  createdAt  DateTime @default(now()) @map("created_at")
+  user       User     @relation(fields: [userId], references: [id])
+  match      Match    @relation(fields: [matchId], references: [id])
+
+  @@unique([userId, matchId])
+  @@map("predictions")
+}
+
+model PromoCode {
+  id      String    @id @default(cuid())
+  code    String    @unique
+  userId  String    @map("user_id")
+  matchId String    @map("match_id")
+  sentAt  DateTime? @map("sent_at")
+  user    User      @relation(fields: [userId], references: [id])
+  match   Match     @relation(fields: [matchId], references: [id])
+
+  @@unique([userId, matchId])
+  @@map("promo_codes")
+}

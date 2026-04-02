@@ -1,0 +1,150 @@
+"use client";
+
+import { useState } from "react";
+import Image from "next/image";
+import { Navbar } from "./navbar";
+import { AuthModal } from "./auth-modal";
+import { MatchCard } from "./match-card";
+import type { MatchData, PredictionData, UserData } from "@/lib/types";
+import { Trophy, Target, Gift, CalendarX } from "lucide-react";
+
+interface HomeContentProps {
+  matches: MatchData[];
+  predictions: PredictionData[];
+  user: UserData | null;
+}
+
+export function HomeContent({ matches, predictions, user }: HomeContentProps) {
+  const [authOpen, setAuthOpen] = useState(false);
+
+  const predMap = new Map(predictions.map((p) => [p.matchId, p]));
+
+  return (
+    <>
+      <Navbar user={user} onSignIn={() => setAuthOpen(true)} />
+
+      {/* Hero with blue gradient + stadium bg */}
+      <section className="hero-gradient text-white">
+        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-14 pb-10 sm:pt-20 sm:pb-14">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-8">
+            <div className="max-w-xl">
+              <div className="flex items-center gap-3 mb-5 animate-fade-in">
+                <div className="h-px w-8 bg-white/40" />
+                <span className="text-xs font-bold uppercase tracking-[0.2em] text-white/70">
+                  World Cup 2026 &middot; Group I
+                </span>
+              </div>
+
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[0.95] tracking-tight mb-4 animate-fade-slide-up">
+                PREDICT
+                <br />
+                THE MATCH
+              </h1>
+
+              <p className="text-base sm:text-lg text-white/70 max-w-md leading-relaxed animate-fade-slide-up stagger-2 font-serif italic">
+                Forecast Norway&apos;s group stage results.
+                <br />
+                Get it right — earn rewards.
+              </p>
+            </div>
+
+            {/* FIFA 2026 Logo */}
+            <div className="hidden sm:block animate-fade-in stagger-2 shrink-0">
+              <Image
+                src="/fifa-wc-2026.png"
+                alt="FIFA World Cup 2026"
+                width={100}
+                height={155}
+                className="opacity-90 drop-shadow-[0_4px_24px_rgba(0,0,0,0.3)]"
+                priority
+              />
+            </div>
+          </div>
+
+          {/* Steps — pill cards */}
+          <div className="mt-10 flex flex-wrap gap-4 animate-fade-slide-up stagger-3">
+            {[
+              { icon: Target, label: "Predict", desc: "Pick your outcome" },
+              { icon: Trophy, label: "Watch", desc: "Follow the match" },
+              { icon: Gift, label: "Win", desc: "Get a promo code" },
+            ].map((step, i) => (
+              <div
+                key={i}
+                className="flex items-center gap-3 bg-white/10 backdrop-blur-sm border border-white/10 rounded-xl px-4 py-3"
+              >
+                <div className="w-8 h-8 bg-white/15 rounded-lg flex items-center justify-center">
+                  <step.icon className="w-4 h-4 text-white" />
+                </div>
+                <div>
+                  <p className="text-sm font-bold text-white">{step.label}</p>
+                  <p className="text-xs text-white/60">{step.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Matches */}
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 -mt-4 pb-20 relative z-10">
+        {matches.length === 0 ? (
+          <div className="bg-card border border-border rounded-2xl p-12 text-center shadow-sm">
+            <CalendarX className="w-10 h-10 text-muted-foreground mx-auto mb-4" />
+            <p className="text-lg font-semibold mb-1">No matches scheduled yet</p>
+            <p className="text-sm text-muted-foreground">Check back soon for World Cup 2026 Group I fixtures.</p>
+          </div>
+        ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {matches.map((match, i) => (
+            <div key={match.id}>
+              <MatchCard
+                match={match}
+                prediction={predMap.get(match.id) ?? null}
+                userId={user?.id ?? null}
+                index={i}
+                onNeedAuth={() => setAuthOpen(true)}
+              />
+            </div>
+          ))}
+        </div>
+        )}
+
+        {/* CTA for non-authenticated users */}
+        {!user && matches.length > 0 && (
+          <div className="mt-10 text-center animate-fade-in stagger-4">
+            <button
+              onClick={() => setAuthOpen(true)}
+              className="inline-flex items-center gap-2 px-6 py-3 bg-primary hover:bg-primary/90 text-white font-bold text-sm rounded-xl transition-all hover:translate-y-[-1px] hover:shadow-[0_6px_20px_rgba(43,90,170,0.2)]"
+            >
+              Sign in to make predictions
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2.5}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </button>
+          </div>
+        )}
+      </section>
+
+      {/* Footer */}
+      <footer className="mt-auto border-t border-border bg-card">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Image src="/fifa-wc-2026.png" alt="" width={20} height={31} className="opacity-40" />
+            <span className="text-xs text-muted-foreground">
+              Predict the Match &mdash; World Cup 2026
+            </span>
+          </div>
+          <span className="text-xs text-muted-foreground">Not affiliated with FIFA</span>
+        </div>
+      </footer>
+
+      <AuthModal open={authOpen} onOpenChange={setAuthOpen} />
+    </>
+  );
+}
