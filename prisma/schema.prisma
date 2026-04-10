@@ -21,12 +21,13 @@ enum Outcome {
 }
 
 model User {
-  id          String       @id @default(cuid())
-  email       String       @unique
-  name        String
-  createdAt   DateTime     @default(now()) @map("created_at")
-  predictions Prediction[]
-  promoCodes  PromoCode[]
+  id           String       @id @default(cuid())
+  email        String       @unique
+  name         String
+  passwordHash String?      @map("password_hash")
+  createdAt    DateTime     @default(now()) @map("created_at")
+  predictions  Prediction[]
+  promoCodes   PromoCode[]
 
   @@map("users")
 }
@@ -51,14 +52,15 @@ model Match {
 }
 
 model Prediction {
-  id         String   @id @default(cuid())
-  userId     String   @map("user_id")
-  matchId    String   @map("match_id")
-  prediction Outcome
-  isCorrect  Boolean? @map("is_correct")
-  createdAt  DateTime @default(now()) @map("created_at")
-  user       User     @relation(fields: [userId], references: [id])
-  match      Match    @relation(fields: [matchId], references: [id])
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  matchId   String   @map("match_id")
+  homeScore Int      @map("home_score")
+  awayScore Int      @map("away_score")
+  isCorrect Boolean? @map("is_correct")
+  createdAt DateTime @default(now()) @map("created_at")
+  user      User     @relation(fields: [userId], references: [id])
+  match     Match    @relation(fields: [matchId], references: [id])
 
   @@unique([userId, matchId])
   @@map("predictions")

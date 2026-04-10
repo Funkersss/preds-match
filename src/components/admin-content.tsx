@@ -14,7 +14,7 @@ import {
   Send,
 } from "lucide-react";
 import { toast } from "sonner";
-import type { Outcome, MatchStatus } from "@/lib/types";
+import type { MatchStatus, Outcome } from "@/lib/types";
 
 interface AdminMatch {
   id: string;
@@ -45,7 +45,8 @@ interface AdminPrediction {
   userName: string;
   userEmail: string;
   matchLabel: string;
-  prediction: Outcome;
+  homeScore: number;
+  awayScore: number;
   isCorrect: boolean | null;
   createdAt: string;
 }
@@ -389,8 +390,8 @@ function PredictionsTab({
                 </span>
               </td>
               <td>{p.matchLabel}</td>
-              <td className="font-semibold text-sm">
-                {p.prediction.replace("_", " ")}
+              <td className="font-semibold text-sm tabular-nums">
+                {p.homeScore} : {p.awayScore}
               </td>
               <td>
                 {p.isCorrect === true && (

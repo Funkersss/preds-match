@@ -127,7 +127,12 @@ async function scorePredictions(
   });
 
   for (const pred of predictions) {
-    const isCorrect = pred.prediction === outcome;
+    let predicted: "TEAM1_WIN" | "DRAW" | "TEAM2_WIN";
+    if (pred.homeScore > pred.awayScore) predicted = "TEAM1_WIN";
+    else if (pred.homeScore < pred.awayScore) predicted = "TEAM2_WIN";
+    else predicted = "DRAW";
+
+    const isCorrect = predicted === outcome;
 
     await prisma.prediction.update({
       where: { id: pred.id },
@@ -142,11 +147,7 @@ async function scorePredictions(
       if (!existingPromo) {
         const code = generatePromoCode();
         const promo = await prisma.promoCode.create({
-          data: {
-            code,
-            userId: pred.userId,
-            matchId,
-          },
+          data: { code, userId: pred.userId, matchId },
         });
 
         const emailSent = await sendPromoCodeEmail(

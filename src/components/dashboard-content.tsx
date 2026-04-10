@@ -21,13 +21,8 @@ interface DashboardContentProps {
   promoCodes: PromoCodeData[];
 }
 
-function outcomeLabel(
-  prediction: string,
-  match: MatchData
-): string {
-  if (prediction === "TEAM1_WIN") return `${match.team1} Win`;
-  if (prediction === "TEAM2_WIN") return `${match.team2} Win`;
-  return "Draw";
+function scoreLabel(homeScore: number, awayScore: number): string {
+  return `${homeScore} : ${awayScore}`;
 }
 
 function statusBadge(match: MatchData, isCorrect: boolean | null) {
@@ -151,8 +146,8 @@ export function DashboardContent({
 
                   {/* Prediction */}
                   <div className="text-right shrink-0">
-                    <p className="text-sm font-semibold">
-                      {outcomeLabel(pred.prediction, pred.match)}
+                    <p className="text-sm font-semibold tabular-nums">
+                      {scoreLabel(pred.homeScore, pred.awayScore)}
                     </p>
                     <div className="mt-1">
                       {statusBadge(pred.match, pred.isCorrect)}

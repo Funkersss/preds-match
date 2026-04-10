@@ -12,6 +12,10 @@ interface MatchCardProps {
   userId: string | null;
   index: number;
   onNeedAuth: () => void;
+  homeScore: number;
+  awayScore: number;
+  onHomeScore: (v: number) => void;
+  onAwayScore: (v: number) => void;
 }
 
 function formatMatchDate(date: string) {
@@ -34,6 +38,10 @@ export function MatchCard({
   userId,
   index,
   onNeedAuth,
+  homeScore,
+  awayScore,
+  onHomeScore,
+  onAwayScore,
 }: MatchCardProps) {
   const locked = isLocked(match.matchDate);
   const isLive = match.status === "LIVE";
@@ -45,11 +53,9 @@ export function MatchCard({
       className={`match-card animate-fade-slide-up ${isLive ? "is-live" : ""}`}
       style={{ animationDelay: `${index * 120}ms` }}
     >
-      {/* Top gradient strip */}
       <div className="card-header" />
 
       <div className="p-5 sm:p-6">
-        {/* Header: match info + date */}
         <div className="flex items-center justify-between mb-5">
           <div className="flex items-center gap-2">
             <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-muted-foreground">
@@ -73,9 +79,7 @@ export function MatchCard({
           </div>
         </div>
 
-        {/* Teams — centered layout with circular flags */}
         <div className="flex items-center justify-center gap-4 sm:gap-6 mb-5">
-          {/* Team 1 */}
           <div className="flex flex-col items-center gap-2 flex-1 min-w-0">
             <div className="flag-circle">
               <TeamFlag code={match.team1Code} />
@@ -85,17 +89,12 @@ export function MatchCard({
             </span>
           </div>
 
-          {/* Score or VS */}
           <div className="shrink-0">
             {showScore ? (
               <div className="flex items-center gap-2 animate-score-reveal">
-                <span className="text-3xl font-extrabold tabular-nums">
-                  {match.team1Score}
-                </span>
+                <span className="text-3xl font-extrabold tabular-nums">{match.team1Score}</span>
                 <span className="text-muted-foreground text-lg font-light">:</span>
-                <span className="text-3xl font-extrabold tabular-nums">
-                  {match.team2Score}
-                </span>
+                <span className="text-3xl font-extrabold tabular-nums">{match.team2Score}</span>
               </div>
             ) : (
               <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center">
@@ -104,7 +103,6 @@ export function MatchCard({
             )}
           </div>
 
-          {/* Team 2 */}
           <div className="flex flex-col items-center gap-2 flex-1 min-w-0">
             <div className="flag-circle">
               <TeamFlag code={match.team2Code} />
@@ -115,50 +113,39 @@ export function MatchCard({
           </div>
         </div>
 
-        {/* Countdown */}
         {!isFinished && (
           <div className="flex justify-center mb-5">
             <CountdownTimer targetDate={match.matchDate} />
           </div>
         )}
 
-        {/* Prediction section */}
         <div>
-          {!isFinished && !isLive && (
+          {!isFinished && !isLive && !prediction && !locked && userId && (
             <p className="text-[11px] uppercase tracking-[0.1em] text-muted-foreground mb-3 font-semibold text-center">
-              {prediction
-                ? "Your prediction"
-                : locked
-                  ? "Predictions closed — cutoff is 1h before kickoff"
-                  : "Pick your prediction"}
+              Enter your score prediction
             </p>
           )}
-          {isFinished && prediction && (
-            <p className="text-[11px] uppercase tracking-[0.1em] mb-3 font-semibold text-center">
-              {prediction.isCorrect ? (
-                <span className="text-accent-green">Correct prediction!</span>
-              ) : (
-                <span className="text-accent-red/70">Wrong prediction</span>
-              )}
-            </p>
+          {!isFinished && !isLive && !userId && (
+            <button
+              onClick={onNeedAuth}
+              className="w-full py-2.5 text-xs font-semibold text-primary border border-primary/30 rounded-lg hover:bg-primary/5 transition-colors"
+            >
+              Sign in to predict
+            </button>
           )}
-          {isFinished && !prediction && (
-            <p className="text-[11px] uppercase tracking-[0.1em] text-muted-foreground mb-3 font-semibold text-center">
-              No prediction made
-            </p>
+          {userId && (
+            <PredictionButtons
+              matchId={match.id}
+              team1={match.team1}
+              team2={match.team2}
+              prediction={prediction}
+              locked={locked || isFinished || isLive}
+              homeScore={homeScore}
+              awayScore={awayScore}
+              onHomeScore={onHomeScore}
+              onAwayScore={onAwayScore}
+            />
           )}
-
-          <PredictionButtons
-            matchId={match.id}
-            team1={match.team1}
-            team2={match.team2}
-            existingPrediction={prediction?.prediction ?? null}
-            isCorrect={prediction?.isCorrect ?? null}
-            matchFinished={isFinished || isLive}
-            locked={locked}
-            userId={userId}
-            onNeedAuth={onNeedAuth}
-          />
         </div>
       </div>
     </div>

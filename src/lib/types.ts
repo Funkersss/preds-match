@@ -17,7 +17,8 @@ export interface MatchData {
 export interface PredictionData {
   id: string;
   matchId: string;
-  prediction: Outcome;
+  homeScore: number;
+  awayScore: number;
   isCorrect: boolean | null;
 }
 

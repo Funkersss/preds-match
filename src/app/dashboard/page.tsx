@@ -25,7 +25,8 @@ export default async function DashboardPage() {
     (p) => ({
       id: p.id,
       matchId: p.matchId,
-      prediction: p.prediction,
+      homeScore: p.homeScore,
+      awayScore: p.awayScore,
       isCorrect: p.isCorrect,
       match: {
         id: p.match.id,

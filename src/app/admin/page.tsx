@@ -55,7 +55,8 @@ export default async function AdminPage() {
         userName: p.user.name,
         userEmail: p.user.email,
         matchLabel: `${p.match.team1} vs ${p.match.team2}`,
-        prediction: p.prediction,
+        homeScore: p.homeScore,
+        awayScore: p.awayScore,
         isCorrect: p.isCorrect,
         createdAt: p.createdAt.toISOString(),
       }))}

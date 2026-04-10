@@ -21,8 +21,8 @@ const instrument = Instrument_Serif({
 export const metadata: Metadata = {
   title: "Predict the Match — World Cup 2026",
   description:
-    "Predict Norway's World Cup 2026 Group I results and win promo codes.",
-  keywords: ["World Cup 2026", "predictions", "Norway", "football"],
+    "Predict Sweden's World Cup 2026 Group Stage results and win promo codes.",
+  keywords: ["World Cup 2026", "predictions", "Sweden", "football"],
 };
 
 export default function RootLayout({

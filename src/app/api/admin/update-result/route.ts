@@ -51,7 +51,11 @@ export async function POST(req: NextRequest) {
     });
 
     for (const pred of predictions) {
-      const isCorrect = pred.prediction === outcome;
+      let predicted: "TEAM1_WIN" | "DRAW" | "TEAM2_WIN";
+      if (pred.homeScore > pred.awayScore) predicted = "TEAM1_WIN";
+      else if (pred.homeScore < pred.awayScore) predicted = "TEAM2_WIN";
+      else predicted = "DRAW";
+      const isCorrect = predicted === outcome;
 
       await prisma.prediction.update({
         where: { id: pred.id },
@@ -95,7 +99,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       match,
       scoredPredictions: predictions.length,
-      correctPredictions: predictions.filter((p) => p.prediction === outcome).length,
+      correctPredictions: predictions.filter((p) => {
+        if (p.homeScore > p.awayScore) return outcome === "TEAM1_WIN";
+        if (p.homeScore < p.awayScore) return outcome === "TEAM2_WIN";
+        return outcome === "DRAW";
+      }).length,
     });
   } catch (error) {
     console.error("Update result error:", error);

@@ -34,7 +34,8 @@ export default async function Home() {
   const predData: PredictionData[] = predictions.map((p) => ({
     id: p.id,
     matchId: p.matchId,
-    prediction: p.prediction,
+    homeScore: p.homeScore,
+    awayScore: p.awayScore,
     isCorrect: p.isCorrect,
   }));
 
