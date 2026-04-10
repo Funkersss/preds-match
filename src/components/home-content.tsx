@@ -306,6 +306,21 @@ export function HomeContent({ matches, predictions, user }: HomeContentProps) {
         )}
       </section>
 
+      {/* Finnish Sniper Ad Banner — only for logged-in users */}
+      {user && (
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 pb-10">
+          <div className="rounded-xl overflow-hidden border border-border/30 shadow-sm">
+            <Image
+              src="/banners/banner-finnish-sniper.webp"
+              alt="Finnish Sniper — Play Now"
+              width={1600}
+              height={730}
+              className="w-full"
+            />
+          </div>
+        </div>
+      )}
+
       {/* Footer */}
       <footer className="mt-auto border-t border-border bg-card">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 flex items-center justify-between">
