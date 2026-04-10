@@ -126,7 +126,7 @@ export function HomeContent({ matches, predictions, user }: HomeContentProps) {
           </div>
 
           {/* Vertical Norway Banner — sidebar on xl+ */}
-          <div className="hidden xl:block w-44 shrink-0">
+          <div className="hidden xl:block w-[300px] shrink-0">
             <div className="sticky top-4 rounded-xl overflow-hidden border border-border/30 shadow-sm">
               <Image
                 src="/banners/banner-norway-vertical.png"
