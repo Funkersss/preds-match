@@ -7,7 +7,7 @@ import { Navbar } from "./navbar";
 import { AuthModal } from "./auth-modal";
 import { MatchCard } from "./match-card";
 import type { MatchData, PredictionData, UserData } from "@/lib/types";
-import { Trophy, Target, Gift, CalendarX, CheckCircle2, ChevronDown } from "lucide-react";
+import { Trophy, Target, Gift, CalendarX, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
 
 interface HomeContentProps {
@@ -22,7 +22,8 @@ export function HomeContent({ matches, predictions, user }: HomeContentProps) {
   const router = useRouter();
   const [authOpen, setAuthOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [justSubmitted, setJustSubmitted] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [currentUser, setCurrentUser] = useState<UserData | null>(user);
 
   const predMap = new Map(predictions.map((p) => [p.matchId, p]));
 
@@ -54,7 +55,7 @@ export function HomeContent({ matches, predictions, user }: HomeContentProps) {
     return Date.now() < cutoff;
   });
 
-  const canSubmit = user && openPredictionMatches.length > 0;
+  const canSubmit = currentUser && openPredictionMatches.length > 0;
 
   async function handleSubmitAll() {
     if (!canSubmit || submitting) return;
@@ -79,7 +80,7 @@ export function HomeContent({ matches, predictions, user }: HomeContentProps) {
       const allOk = results.every((r) => r.ok);
       if (allOk) {
         toast.success("Predictions saved!");
-        setJustSubmitted(true);
+        setSubmitted(true);
         router.refresh();
       } else {
         const errors = await Promise.all(
@@ -95,13 +96,12 @@ export function HomeContent({ matches, predictions, user }: HomeContentProps) {
     }
   }
 
-  const showThankYouBanner = allPredicted || justSubmitted;
-  // Show match cards when: banner is not shown, OR user clicked "Change predictions"
-  const showMatchCards = !showThankYouBanner || justSubmitted;
+  const showThankYouBanner = allPredicted || submitted;
+  const showMatchCards = !showThankYouBanner;
 
   return (
     <>
-      <Navbar user={user} onSignIn={() => setAuthOpen(true)} />
+      <Navbar user={currentUser} onSignIn={() => setAuthOpen(true)} />
 
       {/* Hero */}
       <section className="hero-gradient text-white">
@@ -206,15 +206,6 @@ export function HomeContent({ matches, predictions, user }: HomeContentProps) {
                   );
                 })}
               </div>
-              {openPredictionMatches.length > 0 && (
-                <button
-                  onClick={() => setJustSubmitted(false)}
-                  className="mt-3 text-xs text-primary font-semibold flex items-center gap-1 hover:underline"
-                >
-                  <ChevronDown className="w-3 h-3" />
-                  Change predictions
-                </button>
-              )}
             </div>
           </div>
         )}
@@ -237,7 +228,7 @@ export function HomeContent({ matches, predictions, user }: HomeContentProps) {
                         <MatchCard
                           match={match}
                           prediction={predMap.get(match.id) ?? null}
-                          userId={user?.id ?? null}
+                          userId={currentUser?.id ?? null}
                           index={i}
                           onNeedAuth={() => setAuthOpen(true)}
                           homeScore={scores[match.id]?.home ?? 0}
@@ -289,7 +280,7 @@ export function HomeContent({ matches, predictions, user }: HomeContentProps) {
             )}
 
             {/* CTA for non-authenticated users */}
-            {!user && (
+            {!currentUser && (
               <div className="mt-10 text-center animate-fade-in stagger-4">
                 <button
                   onClick={() => setAuthOpen(true)}
@@ -307,7 +298,7 @@ export function HomeContent({ matches, predictions, user }: HomeContentProps) {
       </section>
 
       {/* Finnish Sniper Ad Banner — only for logged-in users */}
-      {user && (
+      {currentUser && (
         <div className="max-w-6xl mx-auto px-4 sm:px-6 pb-10">
           <div className="rounded-xl overflow-hidden border border-border/30 shadow-sm">
             <Image
@@ -334,7 +325,11 @@ export function HomeContent({ matches, predictions, user }: HomeContentProps) {
         </div>
       </footer>
 
-      <AuthModal open={authOpen} onOpenChange={setAuthOpen} />
+      <AuthModal
+        open={authOpen}
+        onOpenChange={setAuthOpen}
+        onAuthSuccess={(userData) => setCurrentUser(userData)}
+      />
     </>
   );
 }

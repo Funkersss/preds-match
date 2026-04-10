@@ -17,9 +17,10 @@ import { toast } from "sonner";
 interface AuthModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onAuthSuccess?: (user: { id: string; email: string; name: string }) => void;
 }
 
-export function AuthModal({ open, onOpenChange }: AuthModalProps) {
+export function AuthModal({ open, onOpenChange, onAuthSuccess }: AuthModalProps) {
   const router = useRouter();
   const [tab, setTab] = useState<"login" | "register">("register");
   const [email, setEmail] = useState("");
@@ -52,12 +53,14 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
         body: JSON.stringify(body),
       });
 
+      const data = await res.json();
+
       if (!res.ok) {
-        const data = await res.json();
         toast.error(data.error || (tab === "register" ? "Registration failed" : "Sign in failed"));
         return;
       }
 
+      onAuthSuccess?.(data.user);
       toast.success(tab === "register" ? "Account created! Welcome!" : "Welcome back!");
       onOpenChange(false);
       resetForm();
