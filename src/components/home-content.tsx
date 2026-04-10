@@ -85,29 +85,59 @@ export function HomeContent({ matches, predictions, user }: HomeContentProps) {
         </div>
       </section>
 
-      {/* Matches */}
+      {/* Banners + Matches */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 -mt-4 pb-20 relative z-10">
-        {matches.length === 0 ? (
-          <div className="bg-card border border-border rounded-2xl p-12 text-center shadow-sm">
-            <CalendarX className="w-10 h-10 text-muted-foreground mx-auto mb-4" />
-            <p className="text-lg font-semibold mb-1">No matches scheduled yet</p>
-            <p className="text-sm text-muted-foreground">Check back soon for World Cup 2026 Group I fixtures.</p>
+        {/* Horizontal Sweden Banner */}
+        <div className="mb-5 rounded-xl overflow-hidden border border-border/30 shadow-sm">
+          <Image
+            src="/banners/banner-sweden-horizontal.png"
+            alt="World Cup 2026 — Sweden"
+            width={1920}
+            height={518}
+            className="w-full"
+            priority
+          />
+        </div>
+
+        {/* Matches + Vertical Norway Banner */}
+        <div className="flex gap-5 items-start">
+          <div className="flex-1 min-w-0">
+            {matches.length === 0 ? (
+              <div className="bg-card border border-border rounded-2xl p-12 text-center shadow-sm">
+                <CalendarX className="w-10 h-10 text-muted-foreground mx-auto mb-4" />
+                <p className="text-lg font-semibold mb-1">No matches scheduled yet</p>
+                <p className="text-sm text-muted-foreground">Check back soon for World Cup 2026 Group I fixtures.</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                {matches.map((match, i) => (
+                  <div key={match.id}>
+                    <MatchCard
+                      match={match}
+                      prediction={predMap.get(match.id) ?? null}
+                      userId={user?.id ?? null}
+                      index={i}
+                      onNeedAuth={() => setAuthOpen(true)}
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
-        ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {matches.map((match, i) => (
-            <div key={match.id}>
-              <MatchCard
-                match={match}
-                prediction={predMap.get(match.id) ?? null}
-                userId={user?.id ?? null}
-                index={i}
-                onNeedAuth={() => setAuthOpen(true)}
+
+          {/* Vertical Norway Banner — sidebar on xl+ */}
+          <div className="hidden xl:block w-44 shrink-0">
+            <div className="sticky top-4 rounded-xl overflow-hidden border border-border/30 shadow-sm">
+              <Image
+                src="/banners/banner-norway-vertical.png"
+                alt="Norway — World Cup 2026"
+                width={1116}
+                height={1495}
+                className="w-full"
               />
             </div>
-          ))}
+          </div>
         </div>
-        )}
 
         {/* CTA for non-authenticated users */}
         {!user && matches.length > 0 && (
