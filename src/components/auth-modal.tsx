@@ -75,7 +75,19 @@ export function AuthModal({ open, onOpenChange, onAuthSuccess }: AuthModalProps)
 
   return (
     <Dialog open={open} onOpenChange={(o) => { onOpenChange(o); if (!o) resetForm(); }}>
-      <DialogContent className="sm:max-w-lg bg-card border-border shadow-xl rounded-2xl overflow-hidden">
+      <DialogContent className="sm:max-w-lg bg-card border-border shadow-xl rounded-2xl overflow-hidden p-0">
+        {/* Finnish Sniper banner */}
+        <a href="/game" className="block">
+          <Image
+            src="/banners/banner-finnish-sniper.webp"
+            alt="Finnish Sniper — Play Now"
+            width={1600}
+            height={730}
+            className="w-full h-auto"
+          />
+        </a>
+
+        <div className="px-4 pb-4 pt-2 space-y-4">
         <DialogHeader>
           <DialogTitle className="text-xl font-bold">
             {tab === "register" ? "Create Account" : "Sign In"}
@@ -176,17 +188,7 @@ export function AuthModal({ open, onOpenChange, onAuthSuccess }: AuthModalProps)
             )}
           </Button>
         </form>
-
-        {/* Finnish Sniper banner */}
-        <a href="/game" className="-mx-4 -mb-4 block overflow-hidden">
-          <Image
-            src="/banners/banner-finnish-sniper.webp"
-            alt="Finnish Sniper — Play Now"
-            width={1600}
-            height={730}
-            className="w-full h-auto"
-          />
-        </a>
+        </div>
       </DialogContent>
     </Dialog>
   );
