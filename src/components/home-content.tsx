@@ -7,7 +7,7 @@ import { Navbar } from "./navbar";
 import { AuthModal } from "./auth-modal";
 import { MatchCard } from "./match-card";
 import type { MatchData, PredictionData, UserData } from "@/lib/types";
-import { Trophy, Target, Gift, CalendarX, CheckCircle2 } from "lucide-react";
+import { Target, CalendarX, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
 
 interface HomeContentProps {
@@ -103,79 +103,21 @@ export function HomeContent({ matches, predictions, user }: HomeContentProps) {
     <>
       <Navbar user={currentUser} onSignIn={() => setAuthOpen(true)} />
 
-      {/* Hero */}
-      <section className="hero-gradient text-white">
-        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-14 pb-10 sm:pt-20 sm:pb-14">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-8">
-            <div className="max-w-xl">
-              <div className="flex items-center gap-3 mb-5 animate-fade-in">
-                <div className="h-px w-8 bg-white/40" />
-                <span className="text-xs font-bold uppercase tracking-[0.2em] text-white/70">
-                  World Cup 2026 &middot; Group Stage
-                </span>
-              </div>
-
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[0.95] tracking-tight mb-4 animate-fade-slide-up">
-                PREDICT
-                <br />
-                THE MATCH
-              </h1>
-
-              <p className="text-base sm:text-lg text-white/70 max-w-md leading-relaxed animate-fade-slide-up stagger-2 font-serif italic">
-                Forecast Sweden&apos;s group stage results.
-                <br />
-                Get it right — earn rewards.
-              </p>
-            </div>
-
-            <div className="hidden sm:block animate-fade-in stagger-2 shrink-0">
-              <Image
-                src="/fifa-wc-2026.png"
-                alt="FIFA World Cup 2026"
-                width={100}
-                height={155}
-                className="opacity-90 drop-shadow-[0_4px_24px_rgba(0,0,0,0.3)]"
-                priority
-              />
-            </div>
-          </div>
-
-          <div className="mt-10 flex flex-wrap gap-4 animate-fade-slide-up stagger-3">
-            {[
-              { icon: Target, label: "Predict", desc: "Enter your score" },
-              { icon: Trophy, label: "Watch", desc: "Follow the match" },
-              { icon: Gift, label: "Win", desc: "Get a promo code" },
-            ].map((step, i) => (
-              <div
-                key={i}
-                className="flex items-center gap-3 bg-white/10 backdrop-blur-sm border border-white/10 rounded-xl px-4 py-3"
-              >
-                <div className="w-8 h-8 bg-white/15 rounded-lg flex items-center justify-center">
-                  <step.icon className="w-4 h-4 text-white" />
-                </div>
-                <div>
-                  <p className="text-sm font-bold text-white">{step.label}</p>
-                  <p className="text-xs text-white/60">{step.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+      {/* Hero — full-screen banner */}
+      <section className="relative w-full">
+        <Image
+          src="/banners/banner-sweden-horizontal.png"
+          alt="World Cup 2026 — Sweden"
+          width={1920}
+          height={518}
+          priority
+          className="w-full h-auto"
+          sizes="100vw"
+        />
       </section>
 
-      {/* Banners + Matches */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 -mt-4 pb-20 relative z-10">
-        {/* Horizontal Sweden Banner */}
-        <div className="mb-5 rounded-xl overflow-hidden border border-border/30 shadow-sm">
-          <Image
-            src="/banners/banner-sweden-horizontal.png"
-            alt="World Cup 2026 — Sweden"
-            width={1920}
-            height={518}
-            className="w-full"
-            priority
-          />
-        </div>
+      {/* Matches */}
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-10 pb-20 relative z-10">
 
         {/* Thank you banner */}
         {showThankYouBanner && (
