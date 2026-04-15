@@ -1,5 +1,5 @@
 {
-  "buildCommand": "prisma migrate deploy && next build",
+  "buildCommand": "(npx prisma migrate deploy || (sleep 5 && npx prisma migrate deploy) || (sleep 10 && npx prisma migrate deploy)) && next build",
   "crons": [
     {
       "path": "/api/cron/check-results",
