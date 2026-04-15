@@ -34,7 +34,7 @@ export function PopupBanner() {
 
         <a href="/game" className="block rounded-xl overflow-hidden shadow-2xl">
           <Image
-            src="/banners/popup-finnish-sniper.png"
+            src="/banners/popup-finnish-sniper.webp"
             alt="Finnish Sniper — Play Now"
             width={1600}
             height={730}

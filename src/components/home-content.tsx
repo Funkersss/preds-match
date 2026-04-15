@@ -262,7 +262,7 @@ export function HomeContent({ matches, predictions, user }: HomeContentProps) {
           className="block rounded-xl overflow-hidden border border-border/30 shadow-sm hover:shadow-md transition-shadow"
         >
           <Image
-            src="/banners/banner-quiz-norway.png"
+            src="/banners/banner-quiz-norway.webp"
             alt="Find out which Norwegian FIFA star you are"
             width={1600}
             height={317}
