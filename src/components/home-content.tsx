@@ -9,6 +9,7 @@ import { MatchCard } from "./match-card";
 import type { MatchData, PredictionData, UserData } from "@/lib/types";
 import { Target, CalendarX, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
+import { PopupBanner } from "./popup-banner";
 
 interface HomeContentProps {
   matches: MatchData[];
@@ -254,6 +255,22 @@ export function HomeContent({ matches, predictions, user }: HomeContentProps) {
         </div>
       )}
 
+      {/* Quiz Banner */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 pb-8">
+        <a
+          href="/quiz"
+          className="block rounded-xl overflow-hidden border border-border/30 shadow-sm hover:shadow-md transition-shadow"
+        >
+          <Image
+            src="/banners/banner-quiz-norway.png"
+            alt="Find out which Norwegian FIFA star you are"
+            width={1600}
+            height={317}
+            className="w-full h-auto"
+          />
+        </a>
+      </div>
+
       {/* Footer */}
       <footer className="mt-auto border-t border-border bg-card">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 flex items-center justify-between">
@@ -272,6 +289,8 @@ export function HomeContent({ matches, predictions, user }: HomeContentProps) {
         onOpenChange={setAuthOpen}
         onAuthSuccess={(userData) => setCurrentUser(userData)}
       />
+
+      <PopupBanner />
     </>
   );
 }
