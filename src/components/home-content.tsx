@@ -254,22 +254,6 @@ export function HomeContent({ matches, predictions, user }: HomeContentProps) {
         </div>
       )}
 
-      {/* Quiz Banner */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 pb-8">
-        <a
-          href="/quiz"
-          className="block rounded-xl overflow-hidden border border-border/30 shadow-sm hover:shadow-md transition-shadow"
-        >
-          <Image
-            src="/banners/banner-quiz-norway.webp"
-            alt="Find out which Norwegian FIFA star you are"
-            width={1600}
-            height={317}
-            className="w-full h-auto"
-          />
-        </a>
-      </div>
-
       {/* Haaland Quiz Banner */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 pb-8">
         <a
