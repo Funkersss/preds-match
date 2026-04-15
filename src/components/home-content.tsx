@@ -111,7 +111,7 @@ export function HomeContent({ matches, predictions, user }: HomeContentProps) {
           width={1920}
           height={518}
           priority
-          className="w-full h-auto md:h-[200px] md:object-cover"
+          className="w-full h-auto"
           sizes="100vw"
         />
       </section>
