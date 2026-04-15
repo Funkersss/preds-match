@@ -9,7 +9,6 @@ import { MatchCard } from "./match-card";
 import type { MatchData, PredictionData, UserData } from "@/lib/types";
 import { Target, CalendarX, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
-import { PopupBanner } from "./popup-banner";
 
 interface HomeContentProps {
   matches: MatchData[];
@@ -264,8 +263,8 @@ export function HomeContent({ matches, predictions, user }: HomeContentProps) {
           <Image
             src="/banners/banner-quiz-norway.webp"
             alt="Find out which Norwegian FIFA star you are"
-            width={1600}
-            height={317}
+            width={1920}
+            height={518}
             className="w-full h-auto"
           />
         </a>
@@ -290,7 +289,6 @@ export function HomeContent({ matches, predictions, user }: HomeContentProps) {
         onAuthSuccess={(userData) => setCurrentUser(userData)}
       />
 
-      <PopupBanner />
     </>
   );
 }

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import {
   Dialog,
   DialogContent,
@@ -74,7 +75,7 @@ export function AuthModal({ open, onOpenChange, onAuthSuccess }: AuthModalProps)
 
   return (
     <Dialog open={open} onOpenChange={(o) => { onOpenChange(o); if (!o) resetForm(); }}>
-      <DialogContent className="sm:max-w-md bg-card border-border shadow-xl rounded-2xl">
+      <DialogContent className="sm:max-w-lg bg-card border-border shadow-xl rounded-2xl overflow-hidden">
         <DialogHeader>
           <DialogTitle className="text-xl font-bold">
             {tab === "register" ? "Create Account" : "Sign In"}
@@ -175,6 +176,17 @@ export function AuthModal({ open, onOpenChange, onAuthSuccess }: AuthModalProps)
             )}
           </Button>
         </form>
+
+        {/* Finnish Sniper banner */}
+        <a href="/game" className="-mx-4 -mb-4 block overflow-hidden">
+          <Image
+            src="/banners/banner-finnish-sniper.webp"
+            alt="Finnish Sniper — Play Now"
+            width={1600}
+            height={730}
+            className="w-full h-auto"
+          />
+        </a>
       </DialogContent>
     </Dialog>
   );
