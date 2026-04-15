@@ -107,9 +107,9 @@ export function HomeContent({ matches, predictions, user }: HomeContentProps) {
       <section className="relative w-full">
         <Image
           src="/banners/banner-sweden-horizontal.webp"
-          alt="World Cup 2026 — Sweden"
-          width={1920}
-          height={518}
+          alt="My Team Predictions — World Cup 2026"
+          width={1600}
+          height={587}
           priority
           className="w-full h-auto"
           sizes="100vw"
