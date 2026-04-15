@@ -104,8 +104,8 @@ export function HomeContent({ matches, predictions, user }: HomeContentProps) {
       <Navbar user={currentUser} onSignIn={() => setAuthOpen(true)} />
 
       {/* Hero banner */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 pt-6">
-        <div className="rounded-2xl overflow-hidden">
+      <section className="max-w-6xl mx-auto sm:px-6 pt-4 sm:pt-6">
+        <div className="sm:rounded-2xl overflow-hidden">
           <Image
             src="/banners/banner-sweden-horizontal.webp"
             alt="My Team Predictions — World Cup 2026"
