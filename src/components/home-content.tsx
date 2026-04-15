@@ -103,17 +103,18 @@ export function HomeContent({ matches, predictions, user }: HomeContentProps) {
     <>
       <Navbar user={currentUser} onSignIn={() => setAuthOpen(true)} />
 
-      {/* Hero — full-screen banner */}
-      <section className="relative w-full">
-        <Image
-          src="/banners/banner-sweden-horizontal.webp"
-          alt="My Team Predictions — World Cup 2026"
-          width={1600}
-          height={587}
-          priority
-          className="w-full h-auto md:h-[400px] md:object-cover"
-          sizes="100vw"
-        />
+      {/* Hero banner */}
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 pt-6">
+        <div className="rounded-2xl overflow-hidden">
+          <Image
+            src="/banners/banner-sweden-horizontal.webp"
+            alt="My Team Predictions — World Cup 2026"
+            width={1600}
+            height={587}
+            priority
+            className="w-full h-auto"
+          />
+        </div>
       </section>
 
       {/* Matches */}
