@@ -4,7 +4,7 @@ import { TeamFlag } from "./flags";
 import { CountdownTimer } from "./countdown-timer";
 import { PredictionButtons } from "./prediction-buttons";
 import type { MatchData, PredictionData } from "@/lib/types";
-import { Calendar } from "lucide-react";
+import { Calendar, MapPin } from "lucide-react";
 
 interface MatchCardProps {
   match: MatchData;
@@ -73,9 +73,17 @@ export function MatchCard({
               </span>
             )}
           </div>
-          <div className="flex items-center gap-1.5 text-muted-foreground">
-            <Calendar className="w-3 h-3" />
-            <span className="text-[11px]">{formatMatchDate(match.matchDate)}</span>
+          <div className="flex flex-col items-end gap-1">
+            <div className="flex items-center gap-1.5 text-muted-foreground">
+              <Calendar className="w-3 h-3" />
+              <span className="text-[11px]">{formatMatchDate(match.matchDate)}</span>
+            </div>
+            {match.venue && (
+              <div className="flex items-center gap-1.5 text-muted-foreground">
+                <MapPin className="w-3 h-3 shrink-0" />
+                <span className="text-[11px]">{match.venue}</span>
+              </div>
+            )}
           </div>
         </div>
 

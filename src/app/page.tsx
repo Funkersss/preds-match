@@ -25,6 +25,7 @@ export default async function Home() {
     team1Code: m.team1Code,
     team2Code: m.team2Code,
     matchDate: m.matchDate.toISOString(),
+    venue: m.venue,
     status: m.status,
     result: m.result,
     team1Score: m.team1Score,

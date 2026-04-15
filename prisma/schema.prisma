@@ -40,6 +40,7 @@ model Match {
   team2Code   String       @map("team2_code")
   matchDate   DateTime     @map("match_date")
   apiMatchId  Int?         @map("api_match_id")
+  venue       String?
   status      MatchStatus  @default(PENDING)
   result      Outcome?
   team1Score  Int?         @map("team1_score")

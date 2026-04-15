@@ -38,6 +38,17 @@ export function SenegalFlag({ className = "w-10 h-7" }: FlagProps) {
   );
 }
 
+export function IraqFlag({ className = "w-10 h-7" }: FlagProps) {
+  return (
+    <svg viewBox="0 0 30 20" className={className} aria-label="Iraq">
+      <rect width="30" height="6.67" fill="#CE1126" />
+      <rect y="6.67" width="30" height="6.67" fill="#FFFFFF" />
+      <rect y="13.33" width="30" height="6.67" fill="#000000" />
+      <text x="15" y="12.2" textAnchor="middle" fill="#007A3D" fontSize="4.2" fontFamily="serif" fontWeight="bold">الله أكبر</text>
+    </svg>
+  );
+}
+
 export function TBDFlag({ className = "w-10 h-7" }: FlagProps) {
   return (
     <svg viewBox="0 0 30 20" className={className} aria-label="TBD">
@@ -72,6 +83,7 @@ const flagMap: Record<string, React.FC<FlagProps>> = {
   NOR: NorwayFlag,
   FRA: FranceFlag,
   SEN: SenegalFlag,
+  IRQ: IraqFlag,
   TBD: TBDFlag,
 };
 

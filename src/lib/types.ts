@@ -8,6 +8,7 @@ export interface MatchData {
   team1Code: string;
   team2Code: string;
   matchDate: string;
+  venue: string | null;
   status: MatchStatus;
   result: Outcome | null;
   team1Score: number | null;
