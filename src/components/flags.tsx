@@ -49,6 +49,49 @@ export function IraqFlag({ className = "w-10 h-7" }: FlagProps) {
   );
 }
 
+export function SwedenFlag({ className = "w-10 h-7" }: FlagProps) {
+  return (
+    <svg viewBox="0 0 33 24" className={className} aria-label="Sweden">
+      <rect width="33" height="24" fill="#006AA7" />
+      <rect x="9" y="0" width="6" height="24" fill="#FECC02" />
+      <rect x="0" y="9" width="33" height="6" fill="#FECC02" />
+    </svg>
+  );
+}
+
+export function TunisiaFlag({ className = "w-10 h-7" }: FlagProps) {
+  return (
+    <svg viewBox="0 0 30 20" className={className} aria-label="Tunisia">
+      <rect width="30" height="20" fill="#E70013" />
+      <circle cx="15" cy="10" r="5" fill="#fff" />
+      <circle cx="16.3" cy="10" r="4" fill="#E70013" />
+      <path
+        d="M15.2 7.5 L15.7 9 L17.3 9 L16 10 L16.5 11.5 L15.2 10.5 L13.9 11.5 L14.4 10 L13.1 9 L14.7 9 Z"
+        fill="#E70013"
+      />
+    </svg>
+  );
+}
+
+export function NetherlandsFlag({ className = "w-10 h-7" }: FlagProps) {
+  return (
+    <svg viewBox="0 0 30 20" className={className} aria-label="Netherlands">
+      <rect width="30" height="6.67" fill="#AE1C28" />
+      <rect y="6.67" width="30" height="6.67" fill="#FFFFFF" />
+      <rect y="13.33" width="30" height="6.67" fill="#21468B" />
+    </svg>
+  );
+}
+
+export function JapanFlag({ className = "w-10 h-7" }: FlagProps) {
+  return (
+    <svg viewBox="0 0 30 20" className={className} aria-label="Japan">
+      <rect width="30" height="20" fill="#FFFFFF" />
+      <circle cx="15" cy="10" r="6" fill="#BC002D" />
+    </svg>
+  );
+}
+
 export function TBDFlag({ className = "w-10 h-7" }: FlagProps) {
   return (
     <svg viewBox="0 0 30 20" className={className} aria-label="TBD">
@@ -84,6 +127,10 @@ const flagMap: Record<string, React.FC<FlagProps>> = {
   FRA: FranceFlag,
   SEN: SenegalFlag,
   IRQ: IraqFlag,
+  SWE: SwedenFlag,
+  TUN: TunisiaFlag,
+  NED: NetherlandsFlag,
+  JPN: JapanFlag,
   TBD: TBDFlag,
 };
 
