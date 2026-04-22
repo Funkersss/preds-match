@@ -11,9 +11,10 @@ import { toast } from "sonner";
 interface NavbarProps {
   user: UserData | null;
   onSignIn: () => void;
+  country: "NO" | "SE";
 }
 
-export function Navbar({ user, onSignIn }: NavbarProps) {
+export function Navbar({ user, onSignIn, country }: NavbarProps) {
   const router = useRouter();
 
   async function handleLogout() {
@@ -22,12 +23,17 @@ export function Navbar({ user, onSignIn }: NavbarProps) {
     router.refresh();
   }
 
+  function switchCountry(c: "NO" | "SE") {
+    document.cookie = `country_override=${c}; path=/; max-age=31536000; SameSite=Lax`;
+    router.push(c === "SE" ? "/sweden" : "/");
+  }
+
   return (
     <nav className="glass-nav sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-14">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group">
+          <Link href={country === "SE" ? "/sweden" : "/"} className="flex items-center gap-2.5 group">
             <Image
               src="/fifa-wc-2026.png"
               alt=""
@@ -42,6 +48,34 @@ export function Navbar({ user, onSignIn }: NavbarProps) {
 
           {/* Right side */}
           <div className="flex items-center gap-3">
+            {/* Country switcher */}
+            <div className="flex items-center gap-0.5 bg-secondary rounded-lg p-0.5">
+              <button
+                onClick={() => switchCountry("NO")}
+                className={`flex items-center gap-1 px-2 py-1 text-[11px] font-semibold rounded-md transition-colors ${
+                  country === "NO"
+                    ? "bg-card text-foreground shadow-sm"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+                aria-label="Switch to Norway"
+              >
+                🇳🇴 <span className="hidden sm:inline">NO</span>
+              </button>
+              <button
+                onClick={() => switchCountry("SE")}
+                className={`flex items-center gap-1 px-2 py-1 text-[11px] font-semibold rounded-md transition-colors ${
+                  country === "SE"
+                    ? "bg-card text-foreground shadow-sm"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+                aria-label="Switch to Sweden"
+              >
+                🇸🇪 <span className="hidden sm:inline">SE</span>
+              </button>
+            </div>
+
+            <div className="w-px h-4 bg-border" />
+
             {user ? (
               <>
                 <Link

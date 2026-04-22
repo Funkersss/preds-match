@@ -5,11 +5,11 @@ import type { MatchData, PredictionData, UserData } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
-export default async function Home() {
+export default async function SwedenPage() {
   const user = await getCurrentUser();
 
   const matches = await prisma.match.findMany({
-    where: { country: "NO" },
+    where: { country: "SE" },
     orderBy: { matchDate: "asc" },
   });
 
@@ -50,11 +50,11 @@ export default async function Home() {
       matches={matchData}
       predictions={predData}
       user={userData}
-      country="NO"
-      heroBannerSrc="/banners/banner-sweden-horizontal.webp"
-      heroBannerAlt="My Team Predictions — World Cup 2026"
-      sidebarBannerSrc="/banners/banner-norway-vertical.png"
-      timezone="Europe/Oslo"
+      country="SE"
+      heroBannerSrc="/banners/banner-sweden-v1.webp"
+      heroBannerAlt="Sweden — World Cup 2026 Predictions"
+      sidebarBannerSrc="/banners/banner-sweden-v2.webp"
+      timezone="Europe/Stockholm"
     />
   );
 }

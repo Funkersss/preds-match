@@ -14,11 +14,16 @@ interface HomeContentProps {
   matches: MatchData[];
   predictions: PredictionData[];
   user: UserData | null;
+  country: "NO" | "SE";
+  heroBannerSrc: string;
+  heroBannerAlt: string;
+  sidebarBannerSrc?: string;
+  timezone: string;
 }
 
 type ScoreMap = Record<string, { home: number; away: number }>;
 
-export function HomeContent({ matches, predictions, user }: HomeContentProps) {
+export function HomeContent({ matches, predictions, user, country, heroBannerSrc, heroBannerAlt, sidebarBannerSrc, timezone }: HomeContentProps) {
   const router = useRouter();
   const [authOpen, setAuthOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -101,14 +106,14 @@ export function HomeContent({ matches, predictions, user }: HomeContentProps) {
 
   return (
     <>
-      <Navbar user={currentUser} onSignIn={() => setAuthOpen(true)} />
+      <Navbar user={currentUser} onSignIn={() => setAuthOpen(true)} country={country} />
 
       {/* Hero banner */}
       <section className="max-w-6xl mx-auto sm:px-6 pt-4 sm:pt-6">
         <div className="sm:rounded-2xl overflow-hidden">
           <Image
-            src="/banners/banner-sweden-horizontal.webp"
-            alt="My Team Predictions — World Cup 2026"
+            src={heroBannerSrc}
+            alt={heroBannerAlt}
             width={1600}
             height={587}
             priority
@@ -178,6 +183,7 @@ export function HomeContent({ matches, predictions, user }: HomeContentProps) {
                           awayScore={scores[match.id]?.away ?? 0}
                           onHomeScore={(v) => handleHomeScore(match.id, v)}
                           onAwayScore={(v) => handleAwayScore(match.id, v)}
+                          timezone={timezone}
                         />
                       </div>
                     ))}
@@ -185,18 +191,20 @@ export function HomeContent({ matches, predictions, user }: HomeContentProps) {
                 )}
               </div>
 
-              {/* Vertical Norway Banner — sidebar on xl+ */}
-              <div className="hidden xl:block w-[300px] shrink-0">
-                <div className="sticky top-4 rounded-xl overflow-hidden border border-border/30 shadow-sm">
-                  <Image
-                    src="/banners/banner-norway-vertical.png"
-                    alt="Norway — World Cup 2026"
-                    width={1116}
-                    height={1495}
-                    className="w-full"
-                  />
+              {/* Vertical sidebar banner — shown on xl+ if provided */}
+              {sidebarBannerSrc && (
+                <div className="hidden xl:block w-[300px] shrink-0">
+                  <div className="sticky top-4 rounded-xl overflow-hidden border border-border/30 shadow-sm">
+                    <Image
+                      src={sidebarBannerSrc}
+                      alt=""
+                      width={1116}
+                      height={1495}
+                      className="w-full"
+                    />
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
 
             {/* Submit All button */}

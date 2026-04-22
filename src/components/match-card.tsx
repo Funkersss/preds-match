@@ -16,15 +16,26 @@ interface MatchCardProps {
   awayScore: number;
   onHomeScore: (v: number) => void;
   onAwayScore: (v: number) => void;
+  timezone?: string;
 }
 
-function formatMatchDate(date: string) {
-  const d = new Date(date);
-  const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-  const days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-  const h = d.getUTCHours().toString().padStart(2, "0");
-  const m = d.getUTCMinutes().toString().padStart(2, "0");
-  return `${days[d.getUTCDay()]}, ${months[d.getUTCMonth()]} ${d.getUTCDate()}, ${h}:${m} UTC`;
+const TZ_LABELS: Record<string, string> = {
+  "Europe/Oslo": "CEST",
+  "Europe/Stockholm": "CEST",
+  "UTC": "UTC",
+};
+
+function formatMatchDate(date: string, timezone = "UTC") {
+  const label = TZ_LABELS[timezone] ?? timezone;
+  const formatted = new Date(date).toLocaleString("en-GB", {
+    timeZone: timezone,
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  return `${formatted} ${label}`;
 }
 
 function isLocked(matchDate: string): boolean {
@@ -42,6 +53,7 @@ export function MatchCard({
   awayScore,
   onHomeScore,
   onAwayScore,
+  timezone = "UTC",
 }: MatchCardProps) {
   const locked = isLocked(match.matchDate);
   const isLive = match.status === "LIVE";
@@ -76,7 +88,7 @@ export function MatchCard({
           <div className="flex flex-col items-end gap-1">
             <div className="flex items-center gap-1.5 text-muted-foreground">
               <Calendar className="w-3 h-3" />
-              <span className="text-[11px]">{formatMatchDate(match.matchDate)}</span>
+              <span className="text-[11px]">{formatMatchDate(match.matchDate, timezone)}</span>
             </div>
             {match.venue && (
               <div className="flex items-center gap-1.5 text-muted-foreground">
