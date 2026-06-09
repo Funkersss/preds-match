@@ -13,26 +13,26 @@ export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title:
-    "Sweden at World Cup 2026 — Predict Every Match | MyTeamPredictions",
+    "Norway at World Cup 2026 — Predict Every Match | MyTeamPredictions",
   description:
-    "Sweden face Tunisia, Netherlands and Japan in the 2026 FIFA World Cup group stage. Predict every Swedish match and follow the squad all the way to the final.",
-  alternates: { canonical: "https://myteampredictions.com/sweden" },
+    "Norway return to the FIFA World Cup for the first time since 1998. Predict every Norwegian group stage match — Haaland, Ødegaard and the full squad face Iraq, Senegal and France.",
+  alternates: { canonical: "https://myteampredictions.com/norway" },
   openGraph: {
     type: "website",
     siteName: "MyTeamPredictions",
     title:
-      "Sweden at World Cup 2026 — Predict Every Match | MyTeamPredictions",
+      "Norway at World Cup 2026 — Predict Every Match | MyTeamPredictions",
     description:
-      "Sweden face Tunisia, Netherlands and Japan in the 2026 FIFA World Cup group stage. Predict every Swedish match and follow the squad all the way to the final.",
-    url: "https://myteampredictions.com/sweden",
+      "Norway return to the FIFA World Cup for the first time since 1998. Predict every Norwegian group stage match — Haaland, Ødegaard and the full squad face Iraq, Senegal and France.",
+    url: "https://myteampredictions.com/norway",
   },
 };
 
-export default async function SwedenPage() {
+export default async function NorwayPage() {
   const user = await getCurrentUser();
 
   const matches = await prisma.match.findMany({
-    where: { country: "SE" },
+    where: { country: "NO" },
     orderBy: { matchDate: "asc" },
   });
 
@@ -76,7 +76,7 @@ export default async function SwedenPage() {
       <JsonLd
         data={breadcrumbSchema([
           { name: "Home", path: "/" },
-          { name: "Sweden", path: "/sweden" },
+          { name: "Norway", path: "/norway" },
         ])}
       />
 
@@ -84,12 +84,12 @@ export default async function SwedenPage() {
         matches={matchData}
         predictions={predData}
         user={userData}
-        country="SE"
-        h1="Sweden at the FIFA World Cup 2026 — Predict the Matches"
-        heroBannerSrc="/banners/banner-sweden-v1.webp"
-        heroBannerAlt="Sweden — World Cup 2026 Predictions"
-        sidebarBannerSrc="/banners/banner-sweden-v2.webp"
-        timezone="Europe/Stockholm"
+        country="NO"
+        h1="Norway at the FIFA World Cup 2026 — Predict the Matches"
+        heroBannerSrc="/banners/banner-sweden-horizontal.webp"
+        heroBannerAlt="Norway — World Cup 2026 Predictions"
+        sidebarBannerSrc="/banners/banner-norway-vertical.png"
+        timezone="Europe/Oslo"
       />
     </>
   );

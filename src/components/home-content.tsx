@@ -15,6 +15,7 @@ interface HomeContentProps {
   predictions: PredictionData[];
   user: UserData | null;
   country: "NO" | "SE";
+  h1: string;
   heroBannerSrc: string;
   heroBannerAlt: string;
   sidebarBannerSrc?: string;
@@ -23,7 +24,7 @@ interface HomeContentProps {
 
 type ScoreMap = Record<string, { home: number; away: number }>;
 
-export function HomeContent({ matches, predictions, user, country, heroBannerSrc, heroBannerAlt, sidebarBannerSrc, timezone }: HomeContentProps) {
+export function HomeContent({ matches, predictions, user, country, h1, heroBannerSrc, heroBannerAlt, sidebarBannerSrc, timezone }: HomeContentProps) {
   const router = useRouter();
   const [authOpen, setAuthOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -106,6 +107,10 @@ export function HomeContent({ matches, predictions, user, country, heroBannerSrc
 
   return (
     <>
+      {/* Server-rendered page heading (SEO). Visually hidden so the hero banner
+          stays the visual focal point, but present in the initial HTML. */}
+      <h1 className="sr-only">{h1}</h1>
+
       <Navbar user={currentUser} onSignIn={() => setAuthOpen(true)} country={country} />
 
       {/* Hero banner */}
