@@ -40,6 +40,21 @@ export const metadata: Metadata = {
     description:
       "Predict every match at the 2026 FIFA World Cup. Follow Norway, Sweden, Finland and 48 teams competing in North America.",
     url: "https://myteampredictions.com/",
+    images: [
+      {
+        url: "https://myteampredictions.com/og-home.png",
+        width: 1200,
+        height: 630,
+        alt: "MyTeamPredictions — World Cup 2026 Match Predictions",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "MyTeamPredictions — World Cup 2026 Match Predictions",
+    description:
+      "Predict every match at the 2026 FIFA World Cup. Follow Norway, Sweden, Finland and 48 teams competing in North America.",
+    images: ["https://myteampredictions.com/og-home.png"],
   },
 };
 

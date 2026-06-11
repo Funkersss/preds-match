@@ -16,7 +16,13 @@ export const metadata: Metadata = {
     "Sweden at World Cup 2026 — Predict Every Match | MyTeamPredictions",
   description:
     "Sweden face Tunisia, Netherlands and Japan in the 2026 FIFA World Cup group stage. Predict every Swedish match and follow the squad all the way to the final.",
-  alternates: { canonical: "https://myteampredictions.com/sweden" },
+  alternates: {
+    canonical: "https://myteampredictions.com/sweden",
+    languages: {
+      en: "https://myteampredictions.com/sweden",
+      "x-default": "https://myteampredictions.com/sweden",
+    },
+  },
   openGraph: {
     type: "website",
     siteName: "MyTeamPredictions",
@@ -25,6 +31,22 @@ export const metadata: Metadata = {
     description:
       "Sweden face Tunisia, Netherlands and Japan in the 2026 FIFA World Cup group stage. Predict every Swedish match and follow the squad all the way to the final.",
     url: "https://myteampredictions.com/sweden",
+    images: [
+      {
+        url: "https://myteampredictions.com/og-sweden.png",
+        width: 1200,
+        height: 630,
+        alt: "Sweden at World Cup 2026 — Predict Every Match",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title:
+      "Sweden at World Cup 2026 — Predict Every Match | MyTeamPredictions",
+    description:
+      "Sweden face Tunisia, Netherlands and Japan in the 2026 FIFA World Cup group stage. Predict every Swedish match and follow the squad all the way to the final.",
+    images: ["https://myteampredictions.com/og-sweden.png"],
   },
 };
 

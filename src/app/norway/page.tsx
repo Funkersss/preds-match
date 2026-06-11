@@ -16,7 +16,13 @@ export const metadata: Metadata = {
     "Norway at World Cup 2026 — Predict Every Match | MyTeamPredictions",
   description:
     "Norway return to the FIFA World Cup for the first time since 1998. Predict every Norwegian group stage match — Haaland, Ødegaard and the full squad face Iraq, Senegal and France.",
-  alternates: { canonical: "https://myteampredictions.com/norway" },
+  alternates: {
+    canonical: "https://myteampredictions.com/norway",
+    languages: {
+      en: "https://myteampredictions.com/norway",
+      "x-default": "https://myteampredictions.com/norway",
+    },
+  },
   openGraph: {
     type: "website",
     siteName: "MyTeamPredictions",
@@ -25,6 +31,22 @@ export const metadata: Metadata = {
     description:
       "Norway return to the FIFA World Cup for the first time since 1998. Predict every Norwegian group stage match — Haaland, Ødegaard and the full squad face Iraq, Senegal and France.",
     url: "https://myteampredictions.com/norway",
+    images: [
+      {
+        url: "https://myteampredictions.com/og-norway.png",
+        width: 1200,
+        height: 630,
+        alt: "Norway at World Cup 2026 — Predict Every Match",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title:
+      "Norway at World Cup 2026 — Predict Every Match | MyTeamPredictions",
+    description:
+      "Norway return to the FIFA World Cup for the first time since 1998. Predict every Norwegian group stage match — Haaland, Ødegaard and the full squad face Iraq, Senegal and France.",
+    images: ["https://myteampredictions.com/og-norway.png"],
   },
 };
 

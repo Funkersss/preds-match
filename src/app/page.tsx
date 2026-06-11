@@ -9,7 +9,13 @@ export const dynamic = "force-dynamic";
 // Title, description and Open Graph are inherited from the root layout, which
 // holds the homepage values. Here we only pin the canonical URL.
 export const metadata: Metadata = {
-  alternates: { canonical: "https://myteampredictions.com/" },
+  alternates: {
+    canonical: "https://myteampredictions.com/",
+    languages: {
+      en: "https://myteampredictions.com/",
+      "x-default": "https://myteampredictions.com/",
+    },
+  },
 };
 
 export default async function Home() {
